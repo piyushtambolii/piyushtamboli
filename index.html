@@ -13,7 +13,10 @@
 
     <nav class="nav-bar">
         <a href="#" class="logo">Portfolio</a>
-        <ul>
+        <div class="menu-icon">
+            <i class='bx bx-menu'></i>
+        </div>
+        <ul class="nav-links">
             <li class="active"><a href="#home">Home</a></li>
             <li><a href="#about">About</a></li>
             <li><a href="#skills">Skills</a></li>
@@ -134,6 +137,23 @@
     </section>
 
     <script>
+        // Mobile menu toggle
+        const menuIcon = document.querySelector('.menu-icon');
+        const navLinks = document.querySelector('.nav-links');
+        
+        menuIcon.addEventListener('click', () => {
+            menuIcon.classList.toggle('active');
+            navLinks.classList.toggle('active');
+        });
+
+        // Close menu when clicking a link
+        document.querySelectorAll('.nav-links li a').forEach(link => {
+            link.addEventListener('click', () => {
+                menuIcon.classList.remove('active');
+                navLinks.classList.remove('active');
+            });
+        });
+
         // Navbar scroll effect
         window.addEventListener('scroll', function() {
             const navbar = document.querySelector('.nav-bar');
@@ -146,7 +166,7 @@
 
         // Active section highlighting
         const sections = document.querySelectorAll('section');
-        const navLinks = document.querySelectorAll('.nav-bar ul li a');
+        const navMenuLinks = document.querySelectorAll('.nav-bar ul li a');
 
         window.addEventListener('scroll', () => {
             let current = '';
