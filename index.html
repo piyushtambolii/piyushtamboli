@@ -25,6 +25,10 @@
                         // Use Inter as the default font
                         sans: ['Inter', 'sans-serif'],
                     },
+
+                    spacing: {
+                        '76': '19rem',
+                    },
                     colors: {
                         // Define custom colors based on original site
                         brand: {
@@ -32,6 +36,9 @@
                             'secondary': '#5ac72c', // Darker green
                             'dark': '#1f242d', // Dark background
                             'light': '#b1b1b1', // Light text
+
+                            'brand-dark': '#1f242d', 
+                            'body-bg': '#1f2937',
                         }
                     },
                     // Define keyframe animations
@@ -43,12 +50,38 @@
                         'pulse-slow': {
                             '0%, 100%': { opacity: '1', transform: 'scale(1)' },
                             '50%': { opacity: '.9', transform: 'scale(1.05)' },
+                        },
+
+                        // Base rotation (slow, clockwise)
+                        'complex-rotation': {
+                            'to': { transform: 'rotate(1turn)' },
+                        },
+                        // Reverse rotation (faster, counter-clockwise)
+                        'reverse-rotation': {
+                            'to': { transform: 'rotate(-1turn)' },
+                        },
+                        // Pulsating Glow using CSS filter: drop-shadow
+                        'pulse-glow': {
+                            '0%, 100%': { 
+                                // Initial/Final glow state (subtle)
+                                filter: 'drop-shadow(0 0 5px rgba(124, 240, 61, 0.4)) drop-shadow(0 0 10px rgba(90, 199, 44, 0.1))', 
+                                opacity: '0.9' 
+                            },
+                            '50%': { 
+                                // Mid-point glow state (intense)
+                                filter: 'drop-shadow(0 0 15px rgba(124, 240, 61, 0.8)) drop-shadow(0 0 30px rgba(90, 199, 44, 0.3))', 
+                                opacity: '1' 
+                            },
                         }
                     },
                     // Assign animations
                     animation: {
                         'rotate-border': 'rotate-border 10s linear infinite',
                         'pulse-slow': 'pulse-slow 2.5s cubic-bezier(0.4, 0, 0.6, 1) infinite',
+
+                        'complex-rotation': 'complex-rotation 12s linear infinite', 
+                        'reverse-rotation': 'reverse-rotation 8s linear infinite', // Faster and opposite
+                        'pulse-glow': 'pulse-glow 3s ease-in-out infinite alternate',
                     }
                 }
             }
@@ -169,16 +202,16 @@
                 <h1 class="text-4xl sm:text-5xl md:text-6xl font-bold text-white">
                     Piyush Tamboli
                 </h1>
-                <h2 class="text-2xl sm:text-3xl md:text-4xl mt-2 h-12">
-                    I'm a
+                <h2 class="text-2xl sm:text-2xl md:text-4xl mt-5 h-12">
+                    
                     <!-- Spans for typing animation -->
-                    <span data-text="Salesforce Developer">Salesforce Developer 🧑‍💻</span>
-                    <span data-text="Salesforce Administrator">Salesforce Administrator</span>
-                    <span data-text="Java Developer">Java Developer</span>
-                    <span data-text="Full Stack Developer">Full Stack Developer</span>
+                    <span data-text="Salesforce Developer">Salesforce Developer</span>
+                    <!-- <span data-text="Salesforce Administrator">Salesforce Administrator</span> -->
+                    <!-- <span data-text="Java Developer">Java Developer</span> -->
+                    <!-- <span data-text="Full Stack Developer">Full Stack Developer</span> -->
                 </h2>
                 <p class="text-base md:text-lg text-brand-light my-6">
-                    A Salesforce Certified Administrator transitioning from Physics to tech. I build impactful CRM solutions and full-stack applications with expertise in Apex, LWC, Java, and Python.
+                    A Salesforce Developer | Apex | LWC | Java | Web Developer.
                 </p>
                 
                 <!-- Buttons & Socials -->
@@ -205,18 +238,23 @@
 
             <!-- Home Image -->
             <div class="home-img">
-                <!-- Spinning Border Box -->
-                <div class="img-box relative w-64 h-64 sm:w-80 sm:h-80 md:w-96 md:h-96 rounded-full flex justify-center items-center overflow-hidden p-1">
-                    <!-- Conic gradient for border animation -->
-                    <div class="absolute inset-[-100%] animate-rotate-border" style="background: conic-gradient(transparent, transparent, transparent, #7cf03d);"></div>
-                    <div class="absolute inset-[-100%] animate-rotate-border" style="animation-delay: -5s; background: conic-gradient(transparent, transparent, transparent, #5ac72c);"></div>
-                    
-                    <!-- Inner Image Container -->
+                <div class="img-box relative 
+                                 w-44 h-44 sm:w-60 sm:h-60 md:w-76 md:h-76
+                                 rounded-full flex justify-center items-center overflow-hidden p-1 z-10 
+                                 animate-complex-rotation animate-pulse-glow">
+                    <!-- Conic gradient 1 (Faster, counter-clockwise rotation) -->
+                    <div class="absolute inset-[-100%] animate-reverse-rotation"
+                        style="background: conic-gradient(transparent, transparent, transparent, #7cf03d);"></div>
+            
+                    <!-- Conic gradient 2 (Slower, clockwise rotation with time delay) -->
+                    <div class="absolute inset-[-100%] animate-complex-rotation"
+                        style="animation-delay: -3s; background: conic-gradient(transparent, transparent, transparent, #5ac72c);">
+                    </div>
+            
+                    <!-- Inner Image Container: This is the actual dark circle holding the image -->
                     <div class="img-item relative w-full h-full bg-brand-dark rounded-full overflow-hidden z-10">
-                        <img src="/piyush-profile.jpg" 
-                             alt="Profile picture of Piyush Tamboli" 
-                             class="w-full h-full object-cover"
-                             onerror="this.src='https://placehold.co/400x400/1f242d/7cf03d?text=P.T.'">
+                        <img src="/piyush-profile.jpg" alt="Profile picture of Piyush Tamboli" class="w-full h-full object-cover"
+                            onerror="this.src='https://placehold.co/400x400/1f242d/7cf03d?text=P.T.'">
                     </div>
                 </div>
             </div>
@@ -645,22 +683,22 @@
             <p class="text-brand-light mb-8">This is a mockup of live stats, which can be wired to the GitHub API to show your real-time activity.</p>
             <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
                 <!-- Stat Card 1 -->
-                <div class="p-4 bg-brand-dark/50 rounded-lg border border-brand-primary/20">
+                <div class="p-4 bg-brand-dark/50 rounded-lg border border-brand-primary/20 transition-all duration-300 hover:scale-105 hover:bg-brand-dark/70 hover:border-brand-primary/60 active:scale-95">
                     <span class="text-4xl font-bold text-brand-primary">42</span>
                     <p class="text-brand-light mt-1">Public Repos</p>
                 </div>
                 <!-- Stat Card 2 -->
-                <div class="p-4 bg-brand-dark/50 rounded-lg border border-brand-primary/20">
+                <div class="p-4 bg-brand-dark/50 rounded-lg border border-brand-primary/20 transition-all duration-300 hover:scale-105 hover:bg-brand-dark/70 hover:border-brand-primary/60 active:scale-95">
                     <span class="text-4xl font-bold text-brand-primary">120+</span>
                     <p class="text-brand-light mt-1">Commits (90 Days)</p>
                 </div>
                 <!-- Stat Card 3 -->
-                <div class="p-4 bg-brand-dark/50 rounded-lg border border-brand-primary/20">
+                <div class="p-4 bg-brand-dark/50 rounded-lg border border-brand-primary/20 transition-all duration-300 hover:scale-105 hover:bg-brand-dark/70 hover:border-brand-primary/60 active:scale-95">
                     <span class="text-4xl font-bold text-brand-primary">18</span>
                     <p class="text-brand-light mt-1">Followers</p>
                 </div>
                 <!-- Stat Card 4 -->
-                <div class="p-4 bg-brand-dark/50 rounded-lg border border-brand-primary/20">
+                <div class="p-4 bg-brand-dark/50 rounded-lg border border-brand-primary/20 transition-all duration-300 hover:scale-105 hover:bg-brand-dark/70 hover:border-brand-primary/60 active:scale-95">
                     <span class="text-4xl font-bold text-brand-primary">5</span>
                     <p class="text-brand-light mt-1">Active Projects</p>
                 </div>
